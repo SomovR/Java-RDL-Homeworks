@@ -1,8 +1,5 @@
 package io.humb1t;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
@@ -11,23 +8,30 @@ public class Main {
     public static void main(String[] args) {
         try {
             new LifeCycleAction().execute();
-        } catch (LifeCycleActionExecutionException | AccessDeniedException e) {
+        } catch (LifeCycleActionExecutionException | AccessDeniedException | TaskOneException e) {
             System.err.println(e.getLocalizedMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
+//        try (FileInputStream fileInputStream = new FileInputStream(args[0])) {
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        try (TaskTwoCloseable resource = new TaskTwoCloseable()){
+            resource.printer();
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 
     public static class LifeCycleAction {
-        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException {
-            throw new LifeCycleActionExecutionException();
+        public void execute() throws LifeCycleActionExecutionException, AccessDeniedException, TaskOneException {
+            throw new TaskOneException("Here is an exception!");
+            //throw new LifeCycleActionExecutionException();
         }
     }
 
