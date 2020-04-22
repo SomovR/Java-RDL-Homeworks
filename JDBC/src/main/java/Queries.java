@@ -107,7 +107,7 @@ public class Queries {
             resultSet = statement.executeQuery(queryDivisions);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(1) + " " +
-                        resultSet.getString(1) + " " +
+                        resultSet.getString(2) + " " +
                         resultSet.getString(3) + " " +
                         resultSet.getInt(4));
             }
